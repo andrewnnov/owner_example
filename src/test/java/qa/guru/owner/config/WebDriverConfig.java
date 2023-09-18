@@ -1,5 +1,7 @@
 package qa.guru.owner.config;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 public class WebDriverConfig {
@@ -23,5 +25,17 @@ public class WebDriverConfig {
             browser = "CHROME";
         }
         return Browser.valueOf(browser);
+    }
+
+    public URL getRemoteUTL() {
+        String remoteURL = System.getProperty("remoteURL");
+        if (Objects.isNull(remoteURL)) {
+            remoteURL = "http://localhost:4444";
+        }
+        try {
+            return new URL(remoteURL);
+        } catch (MalformedURLException e) {
+            throw  new RuntimeException(e);
+        }
     }
 }
